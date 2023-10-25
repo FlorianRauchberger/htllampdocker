@@ -1,0 +1,46 @@
+version: "3"
+services:
+  webserver:
+    build:
+      context: ./dockerfiles/php-7.4
+    container_name: 'lamp-php-7.4'
+    restart: 'always'
+    extra_hosts:
+      - "lamp:127.0.0.1"
+    ports:
+      - "${HOST_APACHE_HTTP_PORT}:80"
+      - "${HOST_APACHE_HTTPS_PORT}:443"
+    volumes:
+      - ./files/apache:/var/www/html
+      - ./config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./config/vhosts:/etc/apache2/sites-enabled
+      - ./log/apache2:/var/log/apache2
+    environment:
+      APACHE_DOCUMENT_ROOT: /var/www/html
+      VIRTUALHOST_SERVER_NAME: lamp
+
+  database:
+    build:
+      context: ./dockerfiles/mysql-8.0
+    container_name: 'lamp-mysql-8.0'
+    restart: 'always'
+    ports:
+      - "${HOST_MYSQL_PORT}:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./log/mysql:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_HOST: '%'
+  phpmyadmin:
+    build:
+      context: ./dockerfiles/phpmyadmin
+    container_name: 'lamp-phpmyadmin'
+    environment:
+      PMA_HOST: database
+    ports:
+      - '${HOST_PMA_PORT}:80'
+    volumes:
+      - /sessions
+      - ./config/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
