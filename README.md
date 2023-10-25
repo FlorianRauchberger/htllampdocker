@@ -4,16 +4,22 @@ This repository contains the Docker Compose configuration needed to quickly depl
 
 ## Services
 **webserver**: PHP 7.4 web server based on Apache
+
 **database**: MySQL 8.0 database server
+
 **phpmyadmin**: PHPMyAdmin instance to manage MySQL database
 
 ## Requirements
 Docker
+
 Docker Compose
 ## Features
 Auto-restart on failure
+
 Configurable port mappings
+
 Extra hosts setting for Apache
+
 Customizable configuration via environment variables
 ## Getting Started
 Clone this Repository
@@ -38,6 +44,7 @@ docker-compose build && docker-compose up -d
 **HOST_PMA_PORT**: Port for PHPMyAdmin. Default is 81.
 ## MySQL
 **MYSQL_ROOT_PASSWORD**: Root password for MySQL. Default is docker123.
+
 **MYSQL_DATABASE**: Name of the default database created. Default is docker123.
 
 ## Extra Hosts
