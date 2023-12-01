@@ -1,8 +1,7 @@
 version: "3"
 services:
   webserver:
-    build:
-      context: ./dockerfiles/php-7.4
+    image: php:7.4-apache-bullseye
     container_name: 'lamp-php-7.4'
     restart: 'always'
     extra_hosts:
@@ -20,8 +19,7 @@ services:
       VIRTUALHOST_SERVER_NAME: lamp
 
   database:
-    build:
-      context: ./dockerfiles/mysql-8.0
+    image: mysql:8.0
     container_name: 'lamp-mysql-8.0'
     restart: 'always'
     ports:
@@ -34,8 +32,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_HOST: '%'
   phpmyadmin:
-    build:
-      context: ./dockerfiles/phpmyadmin
+    image: phpmyadmin:latest
     container_name: 'lamp-phpmyadmin'
     environment:
       PMA_HOST: database
