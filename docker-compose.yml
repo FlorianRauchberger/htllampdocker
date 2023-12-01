@@ -2,7 +2,7 @@ version: "3"
 services:
   webserver:
     image: php:${PHP_VERSION}
-    container_name: 'lamp-php'
+    container_name: 'webserver'
     restart: 'always'
     extra_hosts:
       - "lamp:127.0.0.1"
@@ -19,8 +19,8 @@ services:
       VIRTUALHOST_SERVER_NAME: lamp
 
   database:
-    image: mysql:8.0
-    container_name: 'lamp-mysql-8.0'
+    image: mariadb:latest
+    container_name: 'mariadb'
     restart: 'always'
     ports:
       - "${HOST_MYSQL_PORT}:3306"
@@ -33,7 +33,7 @@ services:
       MYSQL_ROOT_HOST: '%'
   phpmyadmin:
     image: phpmyadmin:latest
-    container_name: 'lamp-phpmyadmin'
+    container_name: 'phpmyadmin'
     environment:
       PMA_HOST: database
     ports:
