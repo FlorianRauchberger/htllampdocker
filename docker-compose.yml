@@ -1,8 +1,8 @@
 version: "3"
 services:
   webserver:
-    image: php:7.4-apache-bullseye
-    container_name: 'lamp-php-7.4'
+    image: php:${PHP_VERSION}
+    container_name: 'lamp-php'
     restart: 'always'
     extra_hosts:
       - "lamp:127.0.0.1"
